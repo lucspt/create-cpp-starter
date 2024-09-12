@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -eEuo pipefail
 
 __wrap__() {
   TMP_DIR="$(mktemp -d)"
@@ -11,11 +11,12 @@ __wrap__() {
   }
 
   catch_err() {
+    echo "Failed to complete installation. Error on line $1"
     cleanup
     rm -rf "$INSTALL_PREFIX"
   }
 
-  # trap catch_err ERR
+  trap 'catch_err $LINENO' ERR
   trap cleanup EXIT
 
   GIT_CLONE_URL=https://github.com/lucspt/create-cpp-starter.git
@@ -40,6 +41,8 @@ __wrap__() {
     echo "  ;;"
     echo "esac"
   } >>"$INSTALL_PREFIX/env"
+
+  echo "Installation complete!"
 
 }
 __wrap__
