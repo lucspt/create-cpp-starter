@@ -14,6 +14,9 @@
 namespace fs = std::filesystem;
 
 // clang-format off
+/**
+ * Get the directory of the current executable.
+ */
 fs::path get_executable_dir() {
   #if defined(__linux__)
     return fs::canonical("/proc/self/exe").parent_path();
@@ -84,11 +87,15 @@ void init_git_repository(fs::path& root) {
   fs::current_path(prev_cwd);
 }
 
+/**
+ * Write the given `lines` to `f`.
+ */
 template <class... Lines>
 void write_file_lines(std::ofstream& f, Lines... lines) {
   ((f << lines << "\n"), ...);
 }
 
+/** Creates a CMakeLists.txt file in `root` */
 fs::path create_cmake_file(fs::path& root, std::string& app_name) {
   fs::path pth{root / "CMakeLists.txt"};
   std::ofstream file{pth};
@@ -123,6 +130,9 @@ fs::path create_cmake_file(fs::path& root, std::string& app_name) {
   return pth;
 };
 
+/** Creates a build directory and generates a cmake build system in 
+ * `root`.
+*/
 void run_cmake_build(fs::path& root) {
   fs::path prev_path = fs::current_path();
   fs::path build_dir = root / "build";
