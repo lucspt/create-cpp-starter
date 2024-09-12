@@ -23,8 +23,10 @@ int main(int argc, char** argv) {
       return 1;
     };
     // copy the templates
+    // we install this executable with the directory prefix of .create-cpp-starter, hence the "." + argv[0]
     fs::path template_dir{
-      fs::canonical(fs::path(argv[0])).parent_path().parent_path() / "templates"
+      fs::canonical("." + fs::path(argv[0]).string()).parent_path() /
+      "templates"
     };
     fs::copy_options copy_opts{fs::copy_options::recursive};
     fs::copy(template_dir / "common", project_path, copy_opts);
