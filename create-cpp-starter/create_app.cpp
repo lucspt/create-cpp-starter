@@ -6,7 +6,6 @@
 
 int main(int argc, char** argv) {
   namespace fs = std::filesystem;
-
   CLI::App app{"Create a C++ app"};
   std::string app_name;
   app.add_option("-n,--name,name", app_name, "The name of the app")->required();
@@ -14,7 +13,7 @@ int main(int argc, char** argv) {
 
   fs::path project_path{app_name};
 
-  project_path = fs::weakly_canonical(project_path);
+  project_path = fs::weakly_canonical(fs::current_path() / project_path);
   app_name = project_path.stem().string();
 
   try {
@@ -23,11 +22,7 @@ int main(int argc, char** argv) {
       return 1;
     };
     // copy the templates
-    // we install this executable with the directory prefix of .create-cpp-starter, hence the "." + argv[0]
-    fs::path template_dir{
-      fs::canonical("." + fs::path(argv[0]).string()).parent_path() /
-      "templates"
-    };
+    fs::path template_dir{get_executable_dir().parent_path() / "templates"};
     fs::copy_options copy_opts{fs::copy_options::recursive};
     fs::copy(template_dir / "common", project_path, copy_opts);
     fs::path src_dir{project_path / app_name};

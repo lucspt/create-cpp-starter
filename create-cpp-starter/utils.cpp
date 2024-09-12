@@ -1,17 +1,56 @@
+#if defined(_WIN32)
+#include <windows.h>
+#elif defined(__APPLE__)
+#include <mach-o/dyld.h>
+#endif
+
 #include <filesystem>
 #include <iostream>
 #include <print>
 #include <string>
 #include <fstream>
+#include <vector>
 
 namespace fs = std::filesystem;
 
+// clang-format off
+fs::path get_executable_dir() {
+  #if defined(__linux__)
+    return fs::canonical("/proc/self/exe").parent_path();
+  #elif defined(__APPLE__)
+    unsigned int bufsize{1024};
+    std::vector<char> buf(bufsize + 1);
+    if (_NSGetExecutablePath(&buf[0], &bufsize) == -1) {
+      buf.resize(bufsize);
+      _NSGetExecutablePath(&buf[0], &bufsize);
+    };
+    return fs::canonical(&buf[0]).parent_path();
+  #elif defined(_WIN32)
+    unsigned int bufsize{1024};
+    std::vector<char> buf(bufsize + 1);
+    GetModuleFileName(NULL, &buf[0], bufsize);
+    return fs::canonical(&buf[0]).parent_path();
+  #else
+  #error Unable to find required executable path on this platform
+  #endif
+}
+// clang-format on
+
+/**
+ * Cleanup the directory if an error occurs
+ */
 void catch_err(fs::path& root) {
   if (fs::exists(root)) {
     fs::remove_all(root);
   }
 }
 
+/**
+ * Check if a folder is valid for template copying. 
+ * A folder is considered invalid if any files or directories are present.
+ * 
+ * If invalid, all top-level contents a warning will be printed.
+ */
 bool is_folder_valid(fs::path& root) {
   if (fs::exists(root) && !fs::is_empty(root)) {
     std::print("The directory contains files that could conflict:\n");
@@ -29,10 +68,12 @@ bool is_folder_valid(fs::path& root) {
   return true;
 }
 
+/** Invoke a `system` command and redirect to `/dev/null` */
 void run_cmd(std::string command) {
   system(std::format("{} > /dev/null", command).c_str());
 }
 
+/** Initialize a git repo in `root`. */
 void init_git_repository(fs::path& root) {
   fs::path prev_cwd = fs::current_path();
   fs::current_path(root);

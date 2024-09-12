@@ -53,6 +53,17 @@
     "variant": "cpp",
     "vector": "cpp",
     "algorithm": "cpp",
-    "print": "cpp"
+    "print": "cpp",
+    "any": "cpp",
+    "charconv": "cpp",
+    "condition_variable": "cpp",
+    "csignal": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "source_location": "cpp",
+    "span": "cpp",
+    "unordered_set": "cpp",
+    "filesystem": "cpp"
   }
 }
