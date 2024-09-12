@@ -15,10 +15,8 @@ add_executable(${PROJECT_NAME} create_app.cpp utils.cpp utils.hpp CLI11.hpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-set(CCS_TARGET_LOCATION_ROOT "${CMAKE_INSTALL_PREFIX}/.create-cpp-starter")
-
-install(TARGETS ${PROJECT_NAME} DESTINATION "${CCS_TARGET_LOCATION_ROOT}/bin")
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/templates" DESTINATION ${CCS_TARGET_LOCATION_ROOT})
+install(TARGETS ${PROJECT_NAME} DESTINATION "${CMAKE_INSTALL_PREFIX}/bin")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/templates" DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_GENERATOR "TGZ")
