@@ -45,7 +45,7 @@ fs::path get_executable_dir() {
 /**
  * Cleanup the directory if an error occurs
  */
-void catch_err(fs::path& root) {
+void catch_err(const fs::path& root) {
   if (fs::exists(root)) {
     fs::remove_all(root);
   }
@@ -57,7 +57,7 @@ void catch_err(fs::path& root) {
  * 
  * If invalid, all top-level contents a warning will be printed.
  */
-bool is_folder_valid(fs::path& root) {
+bool is_folder_valid(const fs::path& root) {
   if (fs::exists(root) && !fs::is_empty(root)) {
     std::print("The directory contains files that could conflict:\n");
     for (auto const dir_entry : fs::directory_iterator(root)) {
@@ -75,12 +75,12 @@ bool is_folder_valid(fs::path& root) {
 }
 
 /** Invoke a `system` command and redirect to `/dev/null` */
-void run_cmd(std::string command) {
+void run_cmd(const std::string command) {
   system(std::format("{} > /dev/null", command).c_str());
 }
 
 /** Initialize a git repo in `root`. */
-void init_git_repository(fs::path& root) {
+void init_git_repository(const fs::path& root) {
   fs::path prev_cwd = fs::current_path();
   fs::current_path(root);
   run_cmd("git init .");
@@ -99,7 +99,7 @@ void write_file_lines(std::ofstream& f, Lines... lines) {
 }
 
 /** Creates a CMakeLists.txt file in `root` */
-fs::path create_cmake_file(fs::path& root, std::string& app_name) {
+fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
   fs::path pth{root / "CMakeLists.txt"};
   std::ofstream file{pth};
   write_file_lines(
@@ -136,7 +136,7 @@ fs::path create_cmake_file(fs::path& root, std::string& app_name) {
 /** Creates a build directory and generates a cmake build system in 
  * `root`.
 */
-void run_cmake_build(fs::path& root) {
+void run_cmake_build(const fs::path& root) {
   fs::path prev_path = fs::current_path();
   fs::path build_dir = root / "build";
   fs::create_directory(build_dir);
