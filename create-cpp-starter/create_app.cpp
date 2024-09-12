@@ -26,12 +26,11 @@ int main(int argc, char** argv) {
     fs::path template_dir{
       fs::canonical(fs::path(argv[0])).parent_path().parent_path() / "templates"
     };
-    fs::copy_options copy_opts = fs::copy_options::recursive;
+    fs::copy_options copy_opts{fs::copy_options::recursive};
     fs::copy(template_dir / "common", project_path, copy_opts);
     fs::path src_dir{project_path / app_name};
-    fs::copy(template_dir / "cpp", src_dir, copy_opts);
-    // right now this template is empty, we could have just had a signle template
-    // but using "common" and "cpp" will allow us to factor in new templates in future.
+    // we could have just had a single template
+    // but using "common" will allow us to factor in new templates in future.
 
     // src, tests dir
     fs::create_directory(project_path / "tests");
