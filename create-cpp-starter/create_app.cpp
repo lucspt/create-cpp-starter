@@ -18,11 +18,11 @@ int main(int argc, char** argv) {
 
   try {
     std::print("\nCreating project directory...\n");
-    if (fs::exists(project_path) && !is_folder_valid(project_path)) {
+    if (fs::exists(project_path) && !ccs::is_folder_valid(project_path)) {
       return 1;
     };
     // copy the templates
-    fs::path template_dir{get_executable_dir().parent_path() / "templates"};
+    fs::path template_dir{ccs::get_executable_dir().parent_path() / "templates"};
     fs::copy_options copy_opts{fs::copy_options::recursive};
     fs::copy(template_dir / "common", project_path, copy_opts);
     fs::path src_dir{project_path / app_name};
@@ -34,17 +34,17 @@ int main(int argc, char** argv) {
     fs::create_directory(project_path / app_name);
 
     std::print("Generating build system...\n");
-    create_cmake_file(project_path, app_name);
-    run_cmake_build(project_path);
+    ccs::create_cmake_file(project_path, app_name);
+    ccs::run_cmake_build(project_path);
 
     std::print("Initializing git repository...\n");
-    init_git_repository(project_path);
+    ccs::init_git_repository(project_path);
 
     std::print("Successfully created project at {0}!\n\n", project_path.string());
   } catch (std::exception& e) {
     std::print("{}\n", e.what());
-    catch_err(project_path);
+    ccs::catch_err(project_path);
   } catch (...) {
-    catch_err(project_path);
+    ccs::catch_err(project_path);
   }
 };

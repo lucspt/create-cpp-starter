@@ -13,6 +13,8 @@
 
 namespace fs = std::filesystem;
 
+namespace ccs {
+
 // clang-format off
 /**
  * Get the directory of the current executable.
@@ -141,4 +143,6 @@ void run_cmake_build(fs::path& root) {
   run_cmd("cmake ..");
   run_cmd("cmake --build .");
   fs::current_path(prev_path);
+}
+
 }
