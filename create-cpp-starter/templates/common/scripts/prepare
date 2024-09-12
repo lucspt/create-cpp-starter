@@ -1,0 +1,18 @@
+# !/usr/bin/env sh
+
+d="$(dirname "$dir")/.github/hooks"
+
+git config --local core.hooksPath "$d"
+
+RED='\033[0;31m'
+
+prepare_hook() {
+  if ! [[ -x "$1" ]] && command -v chmod &> /dev/null; then
+    chmod +x "$1"
+    echo "$1"
+  else
+    printf "${RED} Could not set github hooks file located at $1 as executable. Make sure to do so before proceeding\n"
+  fi
+}
+
+prepare_hook "$d/pre-commit"

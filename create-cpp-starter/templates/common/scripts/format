@@ -1,0 +1,14 @@
+#!usr/bin/sh
+
+if [[ $# -eq 0 ]] ; then
+  f="$(git diff --name-only --cached --diff-filter=ACMR -- "*.cpp" "*.hpp")"
+else  
+  f="$1"
+fi 
+
+if ! [ -z "$f" ]; then
+  echo "==> Running formatter"
+  clang-format -i "$f"
+else
+  echo "No files to format"
+fi

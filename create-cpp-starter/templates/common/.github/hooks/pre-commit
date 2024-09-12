@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+set -e
+
+cd "$(dirname "$0")/../../"
+
+if [[ ! -e build ]]; then
+  RED='\033[0;31m'
+  printf "${RED} You have yet to generate a build for the project. "
+  printf "${RED} You must do so before commiting\n"
+  echo "(e.g. run 'mkdir build && cd build && cmake ..' in project root)"
+  exit 1
+fi
+
+echo "==> Running tests"
+(cd build && cmake --build . && ctest) > /dev/null
+
+sh ./scripts/format
+
+files=$(git diff --name-only --cached --diff-filter=ACMR)
+
+if ! [ -z "$files" ]; then
+  git add -- $files
+fi
