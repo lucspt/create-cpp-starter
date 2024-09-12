@@ -1,10 +1,10 @@
 #!usr/bin/sh
 
-if [[ $# -eq 0 ]] ; then
+if [[ $# -eq 0 ]]; then
   f="$(git diff --name-only --cached --diff-filter=ACMR -- "*.cpp" "*.hpp")"
-else  
+else
   f="$1"
-fi 
+fi
 
 if ! [ -z "$f" ]; then
   echo "==> Running formatter"

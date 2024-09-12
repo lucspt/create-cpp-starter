@@ -7,7 +7,7 @@ git config --local core.hooksPath "$d"
 RED='\033[0;31m'
 
 prepare_hook() {
-  if ! [[ -x "$1" ]] && command -v chmod &> /dev/null; then
+  if ! [[ -x "$1" ]] && command -v chmod &>/dev/null; then
     chmod +x "$1"
     echo "$1"
   else
