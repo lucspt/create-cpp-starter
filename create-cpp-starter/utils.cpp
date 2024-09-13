@@ -146,4 +146,4 @@ void run_cmake_build(const fs::path& root) {
   fs::current_path(prev_path);
 }
 
-}
+}  // namespace ccs
