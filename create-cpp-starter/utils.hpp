@@ -1,3 +1,5 @@
+#ifndef CCS_UTILS
+#define CCS_UTILS
 #include <filesystem>
 
 namespace ccs {
@@ -17,3 +19,4 @@ std::filesystem::path get_executable_dir();
 template <class... Lines>
 void write_file_lines(std::ofstream& f, Lines... lines);
 }  // namespace ccs
+#endif
