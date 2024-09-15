@@ -13,7 +13,7 @@ if [[ ! -e build ]]; then
 fi
 
 echo "==> Running tests"
-(cd build && cmake --build . && ctest) > /dev/null
+(cd build && cmake --build . >/dev/null && ctest)
 
 sh ./scripts/format
 
