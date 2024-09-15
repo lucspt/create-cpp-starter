@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+d="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+cd "$d/../"
+
+if [[ ! -e build ]]; then
+  printf "${RED} You have yet to generate a build for the project. "
+  printf "${RED} You must do so before commiting\n"
+  echo "(e.g. run 'mkdir build && cd build && cmake ..' in project root)"
+  exit 1
+fi
+
+if ! command -v gcovr >/dev/null; then
+  printf "${RED} You must install gcovr to run tests. "
+  printf "See here for more: https://gcovr.com/en/stable/installation.html\n"
+  exit 1
+fi
+
+echo "==> Running tests"
+cd build
+cmake --build . --config Debug >/dev/null
+ctest

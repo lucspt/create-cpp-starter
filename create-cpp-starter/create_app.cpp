@@ -33,6 +33,10 @@ int main(int argc, char** argv) {
     fs::create_directory(project_path / "tests");
     fs::create_directory(project_path / app_name);
 
+    ccs::add_coverage_command_to_test_script(
+      project_path / "scripts" / "test", app_name
+    );
+
     std::print("Generating build system...\n");
     ccs::create_cmake_file(project_path, app_name);
     ccs::run_cmake_build(project_path);

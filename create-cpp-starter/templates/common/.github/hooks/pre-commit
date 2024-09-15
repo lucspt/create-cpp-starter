@@ -12,10 +12,9 @@ if [[ ! -e build ]]; then
   exit 1
 fi
 
-echo "==> Running tests"
-(cd build && cmake --build . >/dev/null && ctest)
+. ./scripts/test
 
-sh ./scripts/format
+. ./scripts/format
 
 files=$(git diff --name-only --cached --diff-filter=ACMR)
 

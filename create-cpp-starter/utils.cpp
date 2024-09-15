@@ -133,6 +133,19 @@ fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
   return pth;
 };
 
+void add_coverage_command_to_test_script(
+  const fs::path& test_script, std::string_view src_dirname
+) {
+  std::ofstream f;
+  f.open(test_script, std::ios_base::app);
+  write_file_lines(
+    f,
+    "",
+    std::format("gcovr -r {} . \"$@\" --config \"$PWD/../gcovr.cfg\"", src_dirname)
+  );
+  f.close();
+};
+
 /** Creates a build directory and generates a cmake build system in 
  * `root`.
 */
