@@ -4,10 +4,12 @@ d="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
 
 cd "$d/../"
 
-if [[ ! -e build ]]; then
-  printf "${RED} You have yet to generate a build for the project. "
+RED="\033[0;31m"
+
+if [[ ! -e "build/debug" ]]; then
+  printf "${RED} You have yet to generate a debug build for the project. "
   printf "${RED} You must do so before commiting\n"
-  echo "(e.g. run 'mkdir build && cd build && cmake ..' in project root)"
+  echo "(e.g. run 'cd build/debug && cmake ../../ -DCMAKE_BUILD_TYPE=Debug' in project root)"
   exit 1
 fi
 
@@ -18,6 +20,4 @@ if ! command -v gcovr >/dev/null; then
 fi
 
 echo "==> Running tests"
-cd build
-cmake --build . --config Debug >/dev/null
-ctest
+(cd "build/debug" && cmake --build . >/dev/null && ctest)

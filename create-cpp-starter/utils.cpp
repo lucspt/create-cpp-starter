@@ -141,7 +141,7 @@ void add_coverage_command_to_test_script(
   write_file_lines(
     f,
     "",
-    std::format("gcovr -r ../{} . \"$@\" --config \"$PWD/../gcovr.cfg\"", src_dirname)
+    std::format("gcovr -r {} . \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname)
   );
   f.close();
 };
@@ -150,11 +150,13 @@ void add_coverage_command_to_test_script(
  * `root`.
 */
 void run_cmake_build(const fs::path& root) {
-  fs::path prev_path = fs::current_path();
-  fs::path build_dir = root / "build";
+  fs::path prev_path{fs::current_path()};
+  fs::path build_dir{root / "build"};
   fs::create_directory(build_dir);
-  fs::current_path(build_dir);
-  run_cmd("cmake ..");
+  fs::path debug_build_dir{build_dir / "debug"};
+  fs::create_directory(debug_build_dir);
+  fs::current_path(debug_build_dir);
+  run_cmd("cmake ../../");
   run_cmd("cmake --build .");
   fs::current_path(prev_path);
 }
