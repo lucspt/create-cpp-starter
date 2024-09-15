@@ -141,7 +141,7 @@ void add_coverage_command_to_test_script(
   write_file_lines(
     f,
     "",
-    std::format("gcovr -r {} . \"$@\" --config \"$PWD/../gcovr.cfg\"", src_dirname)
+    std::format("gcovr -r ../{} . \"$@\" --config \"$PWD/../gcovr.cfg\"", src_dirname)
   );
   f.close();
 };
