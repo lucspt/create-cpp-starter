@@ -139,7 +139,11 @@ void add_coverage_command_to_test_script(
   std::ofstream f;
   f.open(test_script, std::ios_base::app);
   write_file_lines(
-    f, "", std::format("gcovr -r {} . \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname)
+    f,
+    "",
+    std::format(
+      "gcovr -r {} build/debug \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname
+    )
   );
   f.close();
 };
