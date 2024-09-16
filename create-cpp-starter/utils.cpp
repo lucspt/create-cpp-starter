@@ -85,8 +85,8 @@ void init_git_repository(const fs::path& root) {
   fs::current_path(root);
   run_cmd("git init .");
   run_cmd("git add -A");
-  run_cmd(R"(git commit -am "Initial commit")");
   run_cmd("sh ./scripts/prepare");
+  run_cmd(R"(git commit -am "Initial commit" --no-verify)");
   fs::current_path(prev_cwd);
 }
 
