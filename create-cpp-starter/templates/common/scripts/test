@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-d="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
-
-cd "$d/../"
+cd "$(dirname "$0")/../"
 
 RED="\033[0;31m"
 
