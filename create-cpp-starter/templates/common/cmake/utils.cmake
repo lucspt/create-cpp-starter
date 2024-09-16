@@ -24,8 +24,8 @@ endfunction()
 function(target_compile_coverage target)
   set(COVERAGE_${target}_COMPILE_FLAGS "--coverage")
   append_cxx_flag_if_supported("-fprofile-abs-path" COVERAGE_${target}_COMPILE_FLAGS)
-  target_compile_options(${target} PRIVATE "$<$<CONFIG:Debug>:${COVERAGE_${target}_COMPILE_FLAGS}>")
-  target_link_options(${target} PRIVATE "$<$<CONFIG:Debug>:${COVERAGE_${target}_COMPILE_FLAGS}>")
+  target_compile_options(${target} PRIVATE $<$<CONFIG:Debug>:${COVERAGE_${target}_COMPILE_FLAGS}>)
+  target_link_options(${target} PRIVATE $<$<CONFIG:Debug>:${COVERAGE_${target}_COMPILE_FLAGS}>)
 endfunction()
 
 ####################################################################
