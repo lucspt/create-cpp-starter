@@ -107,7 +107,7 @@ fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
     "cmake_minimum_required(VERSION 3.10 FATAL_ERROR)",
     "",
     "if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})",
-    R"( message(FATAL_ERROR "In-source build is not supported"))",
+    "\t(message(FATAL_ERROR \"In-source build is not supported\")",
     "endif()",
     "",  // line break
     std::format("set(PROJECT_NAME {})", app_name),
@@ -119,11 +119,11 @@ fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
     "",
     "include(FetchContent)",
     "FetchContent_Declare(",
-    " googletest",
-    " GIT_REPOSITORY https://github.com/google/googletest.git",
-    " GIT_TAG main",
-    " FIND_PACKAGE_ARGS NAMES googletest",
-    ")\n",
+    "\tgoogletest",
+    "\tGIT_REPOSITORY https://github.com/google/googletest.git",
+    "\tGIT_TAG main",
+    "\tFIND_PACKAGE_ARGS NAMES googletest",
+    ")",
     "FetchContent_MakeAvailable(googletest)",
     "",
     "# uncomment for testing",
@@ -139,9 +139,7 @@ void add_coverage_command_to_test_script(
   std::ofstream f;
   f.open(test_script, std::ios_base::app);
   write_file_lines(
-    f,
-    "",
-    std::format("gcovr -r {} . \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname)
+    f, "", std::format("gcovr -r {} . \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname)
   );
   f.close();
 };
