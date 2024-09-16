@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-cd "$(dirname "$0")/../"
-
 if [[ ! -e "coverage" ]]; then
   mkdir coverage
 fi
