@@ -107,7 +107,7 @@ fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
     "cmake_minimum_required(VERSION 3.10 FATAL_ERROR)",
     "",
     "if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})",
-    "\t(message(FATAL_ERROR \"In-source build is not supported\")",
+    "\tmessage(FATAL_ERROR \"In-source build is not supported\")",
     "endif()",
     "",  // line break
     std::format("set(PROJECT_NAME {})", app_name),
@@ -154,7 +154,7 @@ void run_cmake_build(const fs::path& root) {
   fs::path debug_build_dir{build_dir / "debug"};
   fs::create_directory(debug_build_dir);
   fs::current_path(debug_build_dir);
-  run_cmd("cmake ../../");
+  run_cmd("cmake ../../ -DCMAKE_BUILD_TYPE=Debug");
   run_cmd("cmake --build .");
   fs::current_path(prev_path);
 }
