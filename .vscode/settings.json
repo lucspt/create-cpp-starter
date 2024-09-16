@@ -66,5 +66,4 @@
     "unordered_set": "cpp",
     "filesystem": "cpp"
   },
-  "cmake.sourceDirectory": "/Users/lucacaputo/projects/create-cpp-starter/create-cpp-starter"
 }

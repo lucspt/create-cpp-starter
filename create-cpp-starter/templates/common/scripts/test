@@ -18,4 +18,4 @@ if ! command -v gcovr >/dev/null; then
 fi
 
 echo "==> Running tests"
-(cd "build/debug" && cmake --build . >/dev/null && ctest)
+(cd "build/debug" && cmake --build . >/dev/null && ctest --output-on-failure)

@@ -62,6 +62,8 @@ function(create_tests_from_sources)
   foreach(test_src ${Args_SOURCES})
     cmake_path(GET test_src STEM test_filename)
     set(test_name "test_${test_filename}")
+    # a little bit hacky way to remove any previous gcda files so we don't get tons of obtrusive warnings
+    file(REMOVE "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/${test_name}.dir/${test_src}.gcda")
     add_executable(${test_name} "${test_src}")
     add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
     target_include_directories(${test_name} PRIVATE ${PROJECT_NAME})
