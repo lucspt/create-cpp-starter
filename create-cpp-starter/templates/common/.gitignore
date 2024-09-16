@@ -34,5 +34,5 @@
 # Build
 build
 
-# gcovr (coverage) files
-coverage.html
+# gcovr (coverage) directory
+/coverage

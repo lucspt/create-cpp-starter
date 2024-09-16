@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-. "$(dirname "$0")/test" --html-details coverage.html
+cd "$(dirname "$0")/../"
+
+if [[ ! -e "coverage" ]]; then
+  mkdir coverage
+fi
+
+sh "$(dirname "$0")/test" --html-details coverage/coverage.html
