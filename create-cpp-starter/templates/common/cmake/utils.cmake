@@ -47,26 +47,24 @@ endfunction()
 # `gtest`, `gmock` and `gtest_main` are all  included automatically. 
 # This list this can be empty.
 #
-# create_tests_from_files(
-#   FILES test_dir/file1.test.cpp test_dir/file2.test.cpp     # the test filenames
-#   SOURCES src_dir/src_file.hpp src_dir/src_file.cpp         # the sources to include when adding the executable
-#   LIBRARIES randomlib                                       # the libraries to link to each target generated
+# create_test_from_file(
+#   FILE test_dir/file1.test.cpp                            # the test filename
+#   SOURCES src_dir/src_file.hpp src_dir/src_file.cpp       # the sources to include when adding the executable
+#   LIBRARIES randomlib                                     # the libraries to link to each target generated
 # )
-function(create_tests_from_files)
+function(create_test_from_file)
   cmake_parse_arguments(
     Args
     ""
-    ""
-    "FILES;SOURCES;LIBRARIES"
+    "FILE"
+    "SOURCES;LIBRARIES"
     ${ARGN}
   )
-  foreach(test_src ${Args_FILES})
-    cmake_path(GET test_src STEM test_filename)
-    set(test_name "test_${test_filename}")
-    add_executable(${test_name} "${test_src}" ${Args_SOURCES})
-    add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
-    target_include_directories(${test_name} PRIVATE ${PROJECT_NAME})
-    target_link_libraries(${test_name} ${Args_LIBRARIES} gtest gmock gtest_main)
-    target_compile_coverage(${test_name})
-  endforeach()
+  cmake_path(GET Args_FILE STEM test_filename)
+  set(test_name "test_${test_filename}")
+  add_executable(${test_name} "${Args_FILE}" ${Args_SOURCES})
+  add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
+  target_include_directories(${test_name} PRIVATE ${PROJECT_NAME})
+  target_link_libraries(${test_name} ${Args_LIBRARIES} gtest gmock gtest_main)
+  target_compile_coverage(${test_name})
 endfunction()
