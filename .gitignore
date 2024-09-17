@@ -1,2 +1,7 @@
 # build directory
 build
+
+# clangd cache 
+.cache
+
+todo.txt

@@ -36,3 +36,6 @@ build
 
 # gcovr (coverage) directory
 /coverage
+
+# clangd cache
+.cache

@@ -1,4 +1,10 @@
 {
+  "[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "clangd.arguments": [
+    "-compile-commands-dir=create-cpp-starter/build/debug",
+  ],
   "files.associations": {
     "__bit_reference": "cpp",
     "__config": "cpp",

@@ -1,0 +1,8 @@
+{
+  "[cpp]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "clangd.arguments": [
+    "-compile-commands-dir=build/debug",
+  ],
+}

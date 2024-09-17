@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [-Wall, -Werror, -pedantic-errors, -Wall, -Wextra, -std=c++23]
+
+Diagnostics:
+  UnusedIncludes: Strict
+  ClangTidy:
+    Add: [modernize*, cppcoreguidelines*]
+    Remove: modernize-use-trailing-return-type

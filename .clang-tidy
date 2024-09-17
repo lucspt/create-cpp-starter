@@ -1,0 +1,5 @@
+---
+Checks: "cppcoreguidelines-*,modernize-*,-modernize-use-trailing-return-type"
+WarningsAsErrors: false
+FormatStyle: file
+HeaderFilterRegex: ""

@@ -60,7 +60,7 @@ void catch_err(const fs::path& root) {
 bool is_folder_valid(const fs::path& root) {
   if (fs::exists(root) && !fs::is_empty(root)) {
     std::print("The directory contains files that could conflict:\n");
-    for (auto const dir_entry : fs::directory_iterator(root)) {
+    for (const auto& dir_entry : fs::directory_iterator(root)) {
       std::string name = dir_entry.path().string();
       std::print("{0}\n", fs::is_directory(dir_entry) ? name + "/" : name);
     };
@@ -117,6 +117,10 @@ fs::path create_cmake_file(const fs::path& root, std::string& app_name) {
     "set(CMAKE_CXX_STANDARD 23)",
     "set(CMAKE_CXX_STANDARD_REQUIRED true)",
     "",
+    R"(if("${CMAKE_BUILD_TYPE}" STREQUAL Debug))",
+    "\tset(CMAKE_EXPORT_COMPILE_COMMANDS ON)",
+    "endif()",
+    "",
     "include(FetchContent)",
     "FetchContent_Declare(",
     "\tgoogletest",
@@ -142,7 +146,7 @@ void add_coverage_command_to_test_script(
     f,
     "",
     std::format(
-      "gcovr -r {} build/debug \"$@\" --config \"$PWD/gcovr.cfg\"", src_dirname
+      R"(gcovr -r {} build/debug "$@" --config "$PWD/gcovr.cfg")", src_dirname
     )
   );
   f.close();
