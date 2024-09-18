@@ -29,7 +29,7 @@ __wrap__() {
 
   mkdir build && cd build
 
-  cmake .. -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" >/dev/null
+  cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$INSTALL_PREFIX" >/dev/null
   cmake --build . >/dev/null
   cmake --install . >/dev/null
 
