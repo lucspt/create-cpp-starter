@@ -38,4 +38,4 @@ build
 /coverage
 
 # clangd cache
-.cache
+/.cache
