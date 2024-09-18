@@ -4,6 +4,7 @@
   },
   "clangd.arguments": [
     "-compile-commands-dir=create-cpp-starter/build/debug",
+    "--function-arg-placeholders=false"
   ],
   "files.associations": {
     "__bit_reference": "cpp",

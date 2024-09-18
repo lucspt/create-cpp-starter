@@ -5,4 +5,8 @@ Diagnostics:
   UnusedIncludes: Strict
   ClangTidy:
     Add: [modernize*, cppcoreguidelines*]
-    Remove: [modernize-use-trailing-return-type, cppcoreguidelines-avoid-magic-numbers]
+    Remove:
+      [
+        modernize-use-trailing-return-type,
+        cppcoreguidelines-avoid-magic-numbers,
+      ]
