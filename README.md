@@ -69,8 +69,8 @@ rm -rf $HOME/.create-cpp-starter
 
 The install script places the executable in `$HOME/.create-cpp-starter`, hence the command above.
 
-If you followed the steps above and added any functionality to your shell startup script that will 
-append the executable directory to your PATH, you should remove it. 
+If you followed the steps above and added any functionality to your shell startup script that will
+append the executable directory to your PATH, you should remove it.
 So, assuming you followed the steps in the [install section](#installation),
 just go the file (e.g. `.bash_profile` or `.zprofile`) and remove the following line:
 
