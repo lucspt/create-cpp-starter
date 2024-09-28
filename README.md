@@ -4,7 +4,10 @@ Hey, welcome to `create-cpp-starter`.
 
 It is a cli tool that scaffolds a c++ project with some batteries included like:
 
-- [clang-format](https://clang.llvm.org/docs/ClangFormat.html)
+- [VSCode clangd extension support](https://marketplace.visualstudio.com/items?itemName=llvm-vs-code-extensions.vscode-clangd)
+  (handles formatting, linting, and provides performant intellisense)
+- Useful cmake utilities
+- [Gcovr](https://gcovr.com/en/stable/index.html)
 - A nice git pre-commit hook
 
 And there might be more added over time! For more details, check out the [batteries](#batteries) section.
@@ -80,13 +83,24 @@ And that's it.
 
 ## Batteries
 
-The project comes with [clang-format](https://clang.llvm.org/docs/ClangFormat.html), which will handle code formatting for you.
+The project comes with [clangd](https://clangd.llvm.org/), which provides VSCode intellisense that is much more performant
+than other options.
+
+Using clangd means that [clang-format](https://clang.llvm.org/docs/ClangFormat.html) will handle code formatting for you.
 It is configured in such a way that it behaves like python's [`black`](https://black.readthedocs.io/en/stable/index.html#).
 The configuration was taken from [this repository](https://github.com/justinchuby/clang-format-black).
 
-It also comes with github hooks that will:
+[clang-tidy](https://clang.llvm.org/extra/clang-tidy/) will also run actively in vscode, again because of clangd.
+But note that linting is not performed on any code during the git pre-commit hook because clang-tidy is very slow,
+and I deemed it too slow for the benefit of linting.
 
-1. Run tests with cmake's ctest, aborting the commit if a test fails.
+In your project's directory you will find a `cmake/utils.cmake` file with useful utils that, for example, help automate code coverage setup
+with [Gcovr](https://gcovr.com/en/stable/index.html).
+
+It also comes with a git pre-commit hook that will:
+
+1. Run tests with cmake's ctest, aborting the commit if a test fails or if coverage is under 90%.
+   You can change the coverage threshold in your projects `gcovr.cfg` file.
 2. Format any code being committed.
 
 For now that is about it, but new features may be added soon!
