@@ -61,7 +61,7 @@ bool is_folder_valid(const fs::path& root) {
   if (fs::exists(root) && !fs::is_empty(root)) {
     std::print("The directory contains files that could conflict:\n");
     for (const auto& dir_entry : fs::directory_iterator(root)) {
-      std::string name = dir_entry.path().string();
+      std::string name{dir_entry.path().string()};
       std::print("{0}\n", fs::is_directory(dir_entry) ? name + "/" : name);
     };
 
